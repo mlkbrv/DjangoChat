@@ -1,3 +1,5 @@
 from django.shortcuts import render
-
-# Create your views here.
+from .models import ChatRoom
+def index(request):
+    rooms = ChatRoom.objects.all()
+    return render(request,'chatapp/index.html',{'rooms':rooms})
