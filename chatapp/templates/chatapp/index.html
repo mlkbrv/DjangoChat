@@ -9,7 +9,7 @@
 </head>
 <body>
 {% for room in rooms %}
-    <a href="">{{ room.name }}</a>
+    <a href="{% url 'chatroom' room.slug %}">{{ room.name }}</a>
     <br>
 {% endfor %}
 </body>
