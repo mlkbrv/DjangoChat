@@ -1,16 +1,61 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ChatApp</title>
-</head>
-<body>
-{% for room in rooms %}
-    <a href="{% url 'chatroom' room.slug %}">{{ room.name }}</a>
-    <br>
-{% endfor %}
-</body>
-</html>
+{% extends "chatapp/base.html" %}
+{% block body %}
+<div class="max-w-4xl mx-auto">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome to BlueChat</h1>
+        <p class="text-gray-600">Choose a chat room to start messaging</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for room in rooms %}
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-hashtag text-white text-lg"></i>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs text-gray-500">Active</span>
+                    </div>
+                </div>
+                
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ room.name }}</h3>
+                <p class="text-gray-600 text-sm mb-4">Join the conversation and connect with others</p>
+                
+                <a href="{% url 'chatroom' room.slug %}" 
+                   class="inline-flex items-center justify-center w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-comments mr-2"></i>
+                    Join Room
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-comments text-gray-400 text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">No chat rooms available</h3>
+            <p class="text-gray-600">Create your first chat room to get started</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mt-12 bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600">{{ rooms.count }}</div>
+                <div class="text-sm text-gray-600">Active Rooms</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-green-600">24/7</div>
+                <div class="text-sm text-gray-600">Available</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-purple-600">Secure</div>
+                <div class="text-sm text-gray-600">End-to-End</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
